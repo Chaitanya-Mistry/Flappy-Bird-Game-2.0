@@ -6,15 +6,30 @@ const gameOver = document.getElementById("gameOver");
 const playGameBtn = document.getElementById("playGameBtn");
 const playersList = document.getElementById("playersList");
 
-playersList.addEventListener("click",handlePlayerSelection);
-
-playGameBtn.addEventListener("click",()=>{
-    
-});
-
+let selectedPlayer = "";
 player.style.display = "none";
 obstacle.style.display = "none";
 hole.style.display = "none";
+
+// Player Selection 🤾‍♀️
+const handlePlayerSelection = (event) => {
+    if((event.target.textContent).length < 10){
+        selectedPlayer = event.target.textContent; // Store selected player
+        player.innerHTML = selectedPlayer;
+    }
+}
+
+playersList.addEventListener("click",handlePlayerSelection);
+
+playGameBtn.addEventListener("click",()=>{
+    if(!selectedPlayer){
+        alert("Please select a player 🙄");
+    }else{
+        startGame();
+    }
+});
+
+
 
 
 // Start the Game 🏁
@@ -83,7 +98,7 @@ function startGame() {
 const stopGame = (isGameOver) => {
     if (isGameOver) {
         gameOver.style.display = "block";
-        gameOver.innerText = `Your score is : ${score} 😃`;
+        gameOver.innerHTML = `Your score is : 😃<br/>`;
         gameInstructions.style.display = "flex";
         player.style.display = "none";
         hole.style.display = "none";

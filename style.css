@@ -20,6 +20,8 @@
     font-size: 30px;
     padding: 10px;
     z-index: 999;
+    outline: none;
+    border: none;
 }
 /* Obstacle */
 #obstacle{
@@ -97,10 +99,12 @@
     display: flex;
     cursor: pointer;
     justify-content: center;
-    background-color: rebeccapurple;
+    background-color: rgb(180, 104, 255);
+    transition: all .2s linear;
+    border: none;
 }
 #gameInstructions button:hover{
-
+    background-color: rgb(190, 125, 255);
 }
 #gameOver{
     display: none;
