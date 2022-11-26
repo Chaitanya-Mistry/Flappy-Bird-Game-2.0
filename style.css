@@ -1,0 +1,107 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#gameContainer{
+    background-color: dodgerblue;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Player */
+#player{    
+    width: fit-content;
+    position: fixed;
+    top: 42vh;    
+    left: 10vw;
+    font-size: 30px;
+    padding: 10px;
+    z-index: 999;
+}
+/* Obstacle */
+#obstacle{
+    width: 5vw;
+    position: fixed;
+    right: 0vw;
+    height: 100vh;
+    top: 0;
+    background-color: chartreuse;
+    animation: moveBlock 4s infinite linear;
+}
+#hole{
+    width: 5vw;
+    height: 30vh;
+    background-color: white;
+    position: absolute;
+    right: 0vw;
+    top: 69vh;
+    animation: moveBlock 4s infinite linear;
+}
+
+/* Obstacle Moving Animation */
+@keyframes moveBlock {
+    0%{
+        right:0vw;
+    }
+    25%{
+        right: 25vw;
+    }
+    50%{
+        right: 50vw;
+    }
+    75%{
+        right: 75vw;
+    }
+    100%{
+        right: 100vw ;
+    }
+}
+/* Game instructions */
+#gameInstructions{    
+    color: white;
+    font-size: 21px;
+    letter-spacing: .8px;
+    word-spacing: .7px;
+    background-color: rebeccapurple;
+    width: 350px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;    
+    align-items: center;
+}
+#playersList{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    justify-content: space-around;
+    font-size: 25px;
+}
+#playersList span{
+    cursor: pointer;
+    transition: all .2s linear;
+}
+#playersList span:hover{
+    transform: scale(1.5);
+}
+#gameInstructions button{
+    border-radius: 50%;
+    width: 40%;
+    padding: 10px;
+    font-size: 21px;
+    font-weight: bold;
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    background-color: rebeccapurple;
+}
+#gameInstructions button:hover{
+
+}
+#gameOver{
+    display: none;
+}
