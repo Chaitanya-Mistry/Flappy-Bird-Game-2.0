@@ -7,33 +7,37 @@ const playGameBtn = document.getElementById("playGameBtn");
 const playersList = document.getElementById("playersList");
 
 let selectedPlayer = "";
+
 player.style.display = "none";
 obstacle.style.display = "none";
 hole.style.display = "none";
 
 // Player Selection 🤾‍♀️
 const handlePlayerSelection = (event) => {
-    if((event.target.textContent).length < 10){
+    if ((event.target.textContent).length < 10) {
         selectedPlayer = event.target.textContent; // Store selected player
         player.innerHTML = selectedPlayer;
     }
 }
 
-playersList.addEventListener("click",handlePlayerSelection);
+function attachClickEvents() {
+    playersList.addEventListener("click", handlePlayerSelection);
 
-playGameBtn.addEventListener("click",()=>{
-    if(!selectedPlayer){
-        alert("Please select a player 🙄");
-    }else{
-        startGame();
-    }
-});
+    playGameBtn.addEventListener("click", () => {
+        if (!selectedPlayer) {
+            alert("Please select a player 🙄");
+            window.location.reload();
+        } else {
+            startGame();
+        }
+    }, { once: true });
+}
 
-
-
+attachClickEvents();
 
 // Start the Game 🏁
 function startGame() {
+    let score = 0;
     let gravity = 10;
     let isPlayerJumping = false;
 
@@ -61,10 +65,11 @@ function startGame() {
     hole.style.display = "block";
     const playerLeftPosition = parseInt(window.getComputedStyle(player).left.split("px")[0]);
 
-    // Hole position change dynamically ...
+    // Hole position change dynamically on each animation ...
     hole.addEventListener("animationiteration", () => {
         const randomPosition = Math.random() * 69;
         hole.style.top = `${randomPosition}vh`;
+        score = score + 1;
     });
 
     // Player gravity effect 🔥
@@ -78,12 +83,12 @@ function startGame() {
         // Player Collide detection to the bottom of the screen 📉
         if (playerTop == window.innerHeight - 48) {
             clearInterval(playerFall);
-            stopGame(true);
+            stopGame(score);
         }
         // Player Collide Detection 🥶
         else if ((playerLeftPosition >= obstacleLeftPosition - 30) && (!(playerTop > holeTop && playerBottom > holeBottom)) && playerLeftPosition < obstacleLeftPosition + 5) {
             clearInterval(playerFall);
-            stopGame(true);
+            stopGame(score);
         }
         // Player Jumping 
         else if (!isPlayerJumping) {
@@ -95,14 +100,14 @@ function startGame() {
 }
 
 // Stop the game 🛑
-const stopGame = (isGameOver) => {
-    if (isGameOver) {
-        gameOver.style.display = "block";
-        gameOver.innerHTML = `Your score is : 😃<br/>`;
-        gameInstructions.style.display = "flex";
-        player.style.display = "none";
-        hole.style.display = "none";
-        obstacle.style.display = "none";
-    }
+const stopGame = (gameScore) => {
+    gameOver.style.display = "block";
+    gameOver.innerHTML = `Your score is : ${gameScore} 😃<br></br>`;
+    gameInstructions.style.display = "flex";
+    player.style.display = "none";
+    hole.style.display = "none";
+    obstacle.style.display = "none";
+
+    attachClickEvents();
 };
 

@@ -69,7 +69,8 @@
     word-spacing: .7px;
     background-color: rebeccapurple;
     width: 350px;
-    height: 250px;
+    height: fit-content;
+    padding: 13px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
