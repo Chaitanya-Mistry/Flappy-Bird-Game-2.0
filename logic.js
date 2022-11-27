@@ -2,9 +2,17 @@ const player = document.getElementById("player");
 const obstacle = document.getElementById("obstacle");
 const hole = document.getElementById("hole");
 const gameInstructions = document.getElementById("gameInstructions");
+const gameContainer = document.getElementById("gameContainer");
 const gameOver = document.getElementById("gameOver");
 const playGameBtn = document.getElementById("playGameBtn");
 const playersList = document.getElementById("playersList");
+
+// Audio file Provided by https://mixkit.co/ 🔥
+// Game over Audio 🔊
+const playSound = document.createElement("audio");
+
+// Player jump Audio 🔊
+const playerJumpSound = document.createElement("audio");
 
 let selectedPlayer = "";
 
@@ -12,11 +20,33 @@ player.style.display = "none";
 obstacle.style.display = "none";
 hole.style.display = "none";
 
+// Game Background 
+const changeGameBackground = (background) => {
+    if (background === "vampire") {
+        gameContainer.style.backgroundImage = "url('https://img.freepik.com/free-vector/space-game-background-neon-night-alien-landscape_107791-1624.jpg?w=1380&t=st=1669512771~exp=1669513371~hmac=0564b156901e2c14b92f5cabd4f5a7e834c2883c78165ade399ee0cc78d58918')";
+    } else if (background === "space") {
+        gameContainer.style.backgroundImage = "url('https://img.freepik.com/free-photo/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds_181624-11068.jpg?w=1380&t=st=1669513793~exp=1669514393~hmac=f4667459abe54f3fbb9b93202cffb4a61383ac548ce23bf912e2e5ec483f67d2')";
+    } else if (background === "zombie") {
+        gameContainer.style.backgroundImage = "url('https://img.freepik.com/free-vector/game-landscape-with-tree-with-green-dripping-slime_107791-12220.jpg?w=1380&t=st=1669514118~exp=1669514718~hmac=9168c0a490d39e5cbb996ccd1840336b778b137fc087962d778fb55147ce75c8')";
+    } else if (background === "smile_cool") {
+        gameContainer.style.backgroundImage = "url('https://img.freepik.com/free-vector/hot-air-balloons-flying-fields-rocks_107791-7872.jpg?w=1380&t=st=1669514204~exp=1669514804~hmac=9b60c36c1172e557abd1e9a8e3dbdf138511da661e1131b7f35c3442d1485445')";
+    } else{
+        gameContainer.style.backgroundImage = "url('https://img.freepik.com/free-vector/air-balloon-flying-sea-water-night-sky-with-full-moon-stars-clouds-scenery-background-aerial-travel-with-beautiful-ocean-landscape-view-journey-adventure-cartoon-vector-illustration_107791-8822.jpg?w=1380&t=st=1669514628~exp=1669515228~hmac=efb04f5902c72089281f9ff6020202aa5f784314cb4ab1a0b5f04526fdd0c98b')";
+    }
+}
 // Player Selection 🤾‍♀️
 const handlePlayerSelection = (event) => {
     if ((event.target.textContent).length < 10) {
-        selectedPlayer = event.target.textContent; // Store selected player
-        player.innerHTML = selectedPlayer;
+        // Dynamically change background image based on user's player choice ... 🔥
+        changeGameBackground(event.target.className);
+        // if user chooses new player then deselect old player
+        if (selectedPlayer) {
+            selectedPlayer.style.transform = "scale(1)";
+        }
+        // Current player
+        event.target.style.transform = "scale(2)";
+        selectedPlayer = event.target; // Store selected player
+        player.innerHTML = selectedPlayer.textContent;
     }
 }
 
@@ -47,8 +77,9 @@ function startGame() {
     const playerJump = (event) => {
         if (event.key === "ArrowUp" || event.type === "click") {
             isPlayerJumping = true; // Update player jump state
-
-            // Disable player jumping effect so user needs to press Arrow key ⬆️ or Click  continuously 😆 ...
+            playerJumpSound.src = "./Public/Sound_Effects/mixkit-player-jumping-in-a-video-game-2043.wav";
+            playerJumpSound.play().catch((err) => console.log(err));
+            // Disable player jumping effect so user needs to press Arrow key ⬆️ or Click  continuously ...
             setTimeout(() => {
                 isPlayerJumping = false;
             }, 200);
@@ -102,6 +133,9 @@ function startGame() {
 // Stop the game 🛑
 const stopGame = (gameScore) => {
     gameOver.style.display = "block";
+    // Gameover sound ...
+    playSound.src = "./Public/Sound_Effects/mixkit-player-losing-or-failing-2042.wav";
+    playSound.play();
     gameOver.innerHTML = `Your score is : ${gameScore} 😃<br></br>`;
     gameInstructions.style.display = "flex";
     player.style.display = "none";
@@ -110,4 +144,3 @@ const stopGame = (gameScore) => {
 
     attachClickEvents();
 };
-
