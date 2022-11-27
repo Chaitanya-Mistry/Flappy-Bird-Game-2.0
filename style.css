@@ -7,8 +7,8 @@
 #gameContainer::before {
     content: "";
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.434);
     z-index: 2;
 }
@@ -39,7 +39,9 @@
     outline: none;
     border: none;
 }
-
+.bird{
+    filter: drop-shadow(0 0 0.75rem crimson);
+}
 /* Obstacle */
 #obstacle {
     width: 5vw;
@@ -112,12 +114,12 @@
     font-size: 25px;
 }
 
-#playersList span {
+#playersList span,img {
     cursor: pointer;
     transition: all .2s linear;
 }
 
-#playersList span:hover {
+#playersList span:hover,#playersList img:hover {
     transform: scale(1.5);
 }
 

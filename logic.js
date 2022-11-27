@@ -30,7 +30,9 @@ const changeGameBackground = (background) => {
         gameContainer.style.backgroundImage = "url('https://img.freepik.com/free-vector/game-landscape-with-tree-with-green-dripping-slime_107791-12220.jpg?w=1380&t=st=1669514118~exp=1669514718~hmac=9168c0a490d39e5cbb996ccd1840336b778b137fc087962d778fb55147ce75c8')";
     } else if (background === "smile_cool") {
         gameContainer.style.backgroundImage = "url('https://img.freepik.com/free-vector/hot-air-balloons-flying-fields-rocks_107791-7872.jpg?w=1380&t=st=1669514204~exp=1669514804~hmac=9b60c36c1172e557abd1e9a8e3dbdf138511da661e1131b7f35c3442d1485445')";
-    } else{
+    } else if (background === "bird") {
+        gameContainer.style.backgroundImage = "url('https://img.freepik.com/free-vector/cartoon-nature-landscape-beautiful-sunset-green-field-with-pond-grass-rocks-conifers-purple-sky-with-red-clouds-picturesque-scenery-background-natural-dusk-scene-vector-illustration_107791-10653.jpg?w=1380&t=st=1669567999~exp=1669568599~hmac=cd9f98e36f9d5d04a60abcdfb0f4be1a48b81fa246629aa0b398d86d59e67bc1')";
+    } else {
         gameContainer.style.backgroundImage = "url('https://img.freepik.com/free-vector/air-balloon-flying-sea-water-night-sky-with-full-moon-stars-clouds-scenery-background-aerial-travel-with-beautiful-ocean-landscape-view-journey-adventure-cartoon-vector-illustration_107791-8822.jpg?w=1380&t=st=1669514628~exp=1669515228~hmac=efb04f5902c72089281f9ff6020202aa5f784314cb4ab1a0b5f04526fdd0c98b')";
     }
 }
@@ -43,10 +45,19 @@ const handlePlayerSelection = (event) => {
         if (selectedPlayer) {
             selectedPlayer.style.transform = "scale(1)";
         }
+
+
+        // Check for image player
+
+        if (event.target.className === "bird") {
+            selectedPlayer = event.target;
+            player.innerHTML = `<img class="bird" src="./Public/Images/birds-png-3514.png" width="40" alt="player bird" />`;
+        } else {
+            selectedPlayer = event.target; // Store selected player
+            player.innerHTML = selectedPlayer.textContent;
+        }
         // Current player
         event.target.style.transform = "scale(2)";
-        selectedPlayer = event.target; // Store selected player
-        player.innerHTML = selectedPlayer.textContent;
     }
 }
 
@@ -112,7 +123,7 @@ function startGame() {
         var holeBottom = parseInt(window.getComputedStyle(hole).bottom.split("px")[0]);
 
         // Player Collide detection to the bottom of the screen 📉
-        if (playerTop == window.innerHeight - 48) {
+        if (playerTop >= window.innerHeight - 48) {
             clearInterval(playerFall);
             stopGame(score);
         }
